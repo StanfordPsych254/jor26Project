@@ -1,3 +1,4 @@
 # jor26Project
-Repository for Jesse Reynolds's Psych 254 project
-This is the repository for Jesse's Psych 254 Replication Project. The paper I've chosen to replicate is Scopelliti, Lowenestein, & Vosgerau (2015). 
+This directory contains materials for my replication of Study 3 from Scopelliti, Loewnstein, & Vosgerau (2015, Psychological Science).
+
+The two phases of the study can be found here: http://www.stanford.edu/~jor26/profile-writing.html and here: http://www.stanford.edu/~jor26/profile-rating.html. The replication report can be found here: http://rpubs.com/jor26/187814.
