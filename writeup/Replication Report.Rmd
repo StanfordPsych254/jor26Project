@@ -1,0 +1,349 @@
+---
+title: 'A Replication Study of You Call It "Self-Exuberance"; I Call it "Bragging": Miscalibrated Predictions of Emotional Responses to Self-Promotion'
+author: "Jesse Reynolds (jor26@stanford.edu)"
+date: "2015, Psychological Science"
+output: 
+  html_document:
+    toc: true
+---
+
+The two phases of the replication experiment can be found [here](https://stanford.edu/~jor26/profile-writing.html) and [here](stanford.edu/~jor26/profile-rating.html)
+
+
+#Introduction
+
+The goal of Scopelliti, Loewenstein & Vosgerau's (2015) study was to examine whether people are accurately calibrated in their estimates of how others will respond to their attempts at self-promotion.The authors hypothesized that people would overestimate the amount of self-promotion they should use, and thus that people actively trying to make others like them would ironically be liked less. The authors tested this hypothesis in a series of three experiments. This replication focuses on their third experiment since it seemed the most central to their hypothesis of the negative consequences of miscalibrated estimates of responses to self-promotion. This third study showed that participants instructed to describe themself in such a way that others would like them expected to be liked more - but were actually liked less - than participants asked to describe themselves but not additionally instructed to maximize others' interest in meeting them.
+
+#Methods
+
+##Materials & Procedure
+
+The original experiment was conducted in two stages. 
+
+###Stage 1
+> 
+Participants in the first stage wrote personal profiles, following one of two sets of instructions, and rated how they expected other people would evaluate their profiles. Participants in the second stage (judges) evaluated the profiles. Thus, the experiment had a 2 (instruction: control vs. maximize interest of other people) × 2 (evaluation: predicted vs.actual) between-subjects design.
+						
+> 
+After creating their profile, participants in both conditions predicted how other people would evaluate it. Specifically, they were asked to indicate the extent to which they thought that people reading their profile would like them, be interested in meeting them, think that they were successful, and think that they were braggarts. Finally, participants completed the Modest Responding Scale (MRS; Cialdini, Wosinska, Dabul, Whetstone-Dion, & Heszen, 1998), which measures the tendency to present oneself modestly. All scales ranged from not at all (1) to very much (7).
+
+###Stage 2
+> 
+Each judge was randomly assigned to evaluate 10 of the 99 profiles (randomly selected) on one of the four rating scales. Thus, a subset of respondents rated how much they liked the authors of the profiles, another subset rated their interest in meeting the authors, a third subset rated the likely success of the authors, and a fourth subset rated how much the authors seemed to be bragging. This procedure ensured that evaluations would not be contaminated by halo effects.
+
+##Power Analysis 
+
+To test their prediction people's miscalibrations of responses to self-promotion, the authors conducted a series of 4 regression analyses on the profiles generated in the first phase of the experiment and rated in thehttps://github.com/StanfordPsych254/jor26Project/blob/master/Pilot%20B.csv. These regressions examined their 4 dependent variables (liking, interest in meeting, perceived bragging, and perceived success) as a function of condition (control vs. maximize interest) and evaluation (predicted vs. actual). Two of these regressions (on liking and perceived bragging) found significant results. For reasons discussed below, the replication will focus only on the liking variable.The regression analysis on the liking variable found the following results: 
+
+> The regression of liking ratings was significant, F(3,257)=11.37,p<.001. There was a significant main effecf of evaluation, b=.324, robust SE = 0.071, t(257)=4.56, p<.001, d=0.57; profile writers thought judges would like them more (M=5.05, SD=1.30) than judges actually did (M=4.42, SD=1.54). The main effect of instruction was not significant, b=0.055, robust SE=0.067, (t257)=.82, p=.414, d=0.10, but there was a significant interaction, b =0.162, robust SE = 0.067, t(257) = 2.42, p=.016, d=0.30. Whereas profile writers who tried to maximize interest in themselves believed that they would be liked more (M=5.28, SD=1.20) than did profile writers in the control condition (M=4.85, SD=1.36), b=0.434, robust SE =0.257, t(257) = 1.69, p=.093, d=.21, judges actually liked profile writers in the maximize-interest condition (M=4.31, SD=1.57) less than profile writers in the control condition (M=4.52, SD= 1.51), b=-.215, robust SE=0.073, t(257)=-2.94, p=.004, d=.37.
+
+The interaction in this regression equation of liking writings is the primary target of this replication project. 
+
+Using the above information, a post-hoc power analysis was conducted based on cohen's d and sample size. At the significance level of 0.05, for a regression with 257 degrees of freedom and an effect size of d=0.30, the post-hoc power was calculated as 0.675.
+
+
+#Planned Sample
+
+To detect the Cohen's d effect size of 0.30 at the power of 0.80, 351 clusters of ratings are needed. At the ratio of of clusters:ratings in the original study (261:1,137), this means a total of 1,529 ratings will be needed for a replication with .8 power. With each judge rating the same 15 profiles (instead of a subset of 10 from 100 in the original study; see below section on differences between the original study and the replication), a total sample of 101 judges and 15 profile writers will be needed. To account for the possibility of participant exclusion, a 5% margin of error was added to the sample of judges, and the number of profile writing participants will be increased by 3, resulting in sample sizes of 18 and 106 for the writing and judging phases of the experiment, respectively.
+
+
+#Analysis Plan
+```{r echo=FALSE}
+negative_one=-1
+```
+The anayisis conducted on the replication data will be the same as analysis reported in the original paper: 
+
+> 
+"We regressed each rating on the two manipulated variables, instruction (1 = maximize interest of others, `r negative_one` = control) and evaluation (1 = predicted, `r negative_one` = actual), and on their interaction. To account for the fact that each profile was evaluated by several judges (but only one profile writer), we clustered robust errors by judges. Clustering standard errors by judges means that the standard errors are no longer homogeneous across observations. Because effect-size estimation assumes homogeneous errors, the effect sizes we report (Cohen's ds) are only approximations (degrees of freedom were set to the number of clusters)."
+
+
+#Differences from Original Study
+
+There are three differences between the replication and the original study. First, the replication is limited to only one of the four dependent variables measured in the original study. Of these four, two were nonsignificant, so the replication chose to focus on the significant result which the replication authors deemed most central to the hypothesis. This was was the dependent variable of "liking." Though this constrains the scope of the replication, it does not meaningfully alter the procedure, since each participant in the original study only judged the profiles on one of the four dimensions. 
+
+Second, instead of having each judge rate a subset of 10 out of 100 total profiles, each participant in the replication will rate every profile. Thus, the replication will have more overall profile ratings than the original study, with each profile being rated more times, but with fewer profiles overall. This decicision helps maximize the power of the replication within budgetary constraints. 
+
+Third, each participant in the replication rated 18 profiles instead of the ten profiles rated by each participant in the original study. This decision was made to increase the amount of data obtained from each participant, and thus maximize the power of the study under the constraints of the replication's budget.
+
+#Actual Sample
+
+In the original study, 99 workers from Amazon Mechanical Turk (mean age = 33.58 years, SD = 12.65; 55.65% female), took part in the first phase of the experiment. In the second phase, 456 workers from Amazon Mechanical Turk (mean age =- 32.94 years, SD = 12.58; 51.8% female) participated. 
+
+
+#Differences from pre-data collection methods plan
+
+There are no differences from the preregistered methods plan. 
+
+#Pilot Samples
+For pilot A, the survey was conducted on the  Mechanical Turk sandbox website, and data was collected from 3 non-naive participants. 
+
+For pilot B, the survey was conducted on the  Mechanical Turk website, and data from was collected from 6 and 4 naive participants in each phase of the study, respectively.  
+
+#Replication Sample
+For the replication study, the survey was conducted on the  Mechanical Turk website, and data was collected from 18 and 106 participants in each phase of the study, respectively. Our subjects were 63% male, 75% white, with a mean age of 33 years.
+
+
+#Results
+
+Data preparation
+=================================
+
+Define functions, recode variables and contrast levels. 
+
+#### Loading libraries
+
+```{r message=F, warning=F}
+rm(list=ls())
+library(tidyr)
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(lme4)
+library(knitr)
+library(jpeg)
+library(grid)
+library(lmtest)
+library(lmerTest)
+library(nlme)
+library(gridExtra)
+library(multiwayvcov)
+#functions for se and CI
+sem <- function(x) {sd(x, na.rm=TRUE) / sqrt(length(x))}
+ci95 <- function(x) {sem(x) * 1.96}
+
+#function to get confidence interval
+get_confint<-function(model, vcovCL){
+  t<-qt(.975, model$df.residual)
+  ct<-coeftest(model, vcovCL)
+  est<-cbind(ct[,1], ct[,1]-t*ct[,2], ct[,1]+t*ct[,2])
+  colnames(est)<-c("Estimate","LowerCI","UpperCI")
+  return(est)
+}
+
+#function to compute clustered SE, run regression using clustered SE and return coefficients and confidence intervals
+super.cluster.fun<-function(model, cluster)
+{
+  require(multiwayvcov)
+  require(lmtest)
+  vcovCL<-cluster.vcov(model, cluster)
+  
+  assign("coef",coeftest(model, vcovCL),.GlobalEnv)
+  #coef<-coeftest(model, vcovCL)
+  w<-waldtest(model, vcov = vcovCL, test = "F")
+  ci<-get_confint(model, vcovCL)
+  
+  coefs=coef
+  cis=ci
+  
+  
+  return(list(coef, w, ci))
+}
+
+less_more<-function(a,b)
+{
+  ifelse(a>b,"more","less")
+}
+```
+
+#### Loading data
+```{r message=F, warning=F}
+d <- read.csv("https://stanford.edu/~jor26/Final%20Data.csv",na.strings=c("","NA"))
+d$Participant<-factor(d$Participant)
+d$Evaluation.Type<-relevel(d$Evaluation.Type,"Predicted")
+d$Evaluation.Contrast<-d$Evaluation.Type
+contrasts(d$Evaluation.Contrast)=c(1,-1)
+d$Condition.Contrast<-d$Condition
+contrasts(d$Condition.Contrast)<-c(-1,1)
+```
+
+
+#### Histogram of actual liking across conditions
+
+```{r message=F, warning=F}
+#rating vs. condition and traits
+qplot(Liking, data = d, binwidth= 1, fill= Condition, 
+      facets = ~Condition, geom = "histogram") +  
+      scale_fill_manual(values=c("#FF6633", "#33CCCC")) +
+      xlim(c(1,7)) +
+      scale_x_continuous(breaks=seq(1,7, 1)) +  
+      xlab("Liking") +
+      ylab("Frequency") +
+      theme(legend.position="none") +
+      ggtitle("Actual liking across conditions") + 
+      theme(plot.title = element_text(lineheight=.8, face="bold"),
+            legend.title=element_blank(),
+            axis.ticks=element_blank())
+```
+
+The distributions of actual liking ratings of profiles in the Control and Maximize conditions appear similar. The distribution of actual liking ratings in the Control condition looks slightly more normally distributed than the distribution of ratings in the Maximize condition, which are slightly skewed to the left, but the difference does not seem to be a large one.
+
+#### Distribution of predicted and actual liking across conditions
+
+```{r ratings of traits across conditions and trait types}
+  d %>%
+  ggplot(., aes(x = Condition, y = Liking, col = Evaluation.Type)) + 
+  geom_jitter(width = 0.5, height = 0.75) +
+  scale_colour_manual(values=c("#FF6633", "#33CCCC")) +
+  scale_y_continuous(breaks=seq(0, 9, 1)) +
+  xlab("Condition") +
+  ylab("Liking") +
+  ggtitle("Liking across conditions") + 
+  theme(plot.title = element_text(lineheight=.8, face="bold"),
+        axis.ticks=element_blank())
+```
+
+In line with the observed distributions in the histogram, the number of ratings in each condition appears similar across all values of the Liking dependent variable.
+
+#### Grouping and summarizing predicted and actual liking across conditions
+
+For a bar graph, we will need average ratings across conditions and evaluation types; therefore, the data have been grouped by condition and evaluation type, and then the average ratings, their standard deviations and standard errors, and 95% CI's have been calculated for each of these four groups.
+
+```{r summarizing the data}
+#including trait type and condition in grouping
+ms1 <- d %>%
+  group_by(Condition, Evaluation.Type) %>%
+  summarize(mean = mean(Liking),
+            sd=sd(Liking),
+            sem =sem(Liking), 
+            ci95=ci95(Liking))
+
+# Descriptive statistics: means and se's across conditions & trait types
+ms1.df<-data.frame(ms1) #easier to extract coefficients
+```
+
+Profile writers who tried to maximize interest in themselves believed that they would be liked `r less_more(ms1.df[3][3,],ms1.df[3][1,])` (M= `r signif(ms1.df[3][3,],3)`, SD = `r signif(ms1.df[4][3,],3)`) than did profile writers in the control condition (M= `r signif(ms1.df[3][1,],3)`, SD = `r signif(ms1.df[4][1,],3)`). Judges liked profile writers in the maximize-interest condition (M = `r signif(ms1.df[3][4,],3)`, SD = `r signif(ms1.df[4][4,],3)`) `r less_more(ms1.df[3][4,],ms1.df[3][2,])` than profile writers in the control condition (M = `r signif(ms1.df[3][2,],3)`, SD = `r signif(ms1.df[4][2,],3)`).
+
+The corresponding descriptive statistics of the original study are as follows:
+
+> 
+Whereas profile writers who tried to maximize interest believed that they would be liked more (M = 5.28, SD = 1.20) than did profile writers in the control condition (M = 4.85, SD = 1.36), judges actually liked profile writers in the maximize-interest condition (M = 4.31, SD = 1.57) less than profile writers in the control condition (M = 4.85, SD = 1.56).
+
+Unlike the original study, judges actually liked profile writers in the maximize condition more than profile writers in the control condition, by roughly the same amount as profile writers in the maximize condition expected to be liked more than profile writers in the control condition. This suggests that in our replication study, while participants in general overestimated how much they would be liked, trying to maximize how much others liked them did not make people less accurate in predicting how much they would be liked. 
+
+#### The main replication graph: plot of average liking across evaluation types and conditions
+
+```{r ggplot condition & trait type}
+  ms1 %>% 
+  ggplot(., aes(x = Condition,y = mean,fill = Evaluation.Type)) +  
+  geom_bar(position = 'dodge',stat ='identity', width = 0.6,colour="black") +
+  geom_errorbar(aes(ymin = mean-sem, ymax = mean+sem),
+                  width = .2,                   
+                  position = position_dodge(0.6)) + 
+                  scale_fill_manual(values=c("#B9BABE", "#FFFFFF")) +
+  ylim(3,7) +
+  ylab("Liking") + 
+  xlab("Instruction") +
+  ggtitle("Result from Replication of Experiment 3") + 
+  guides(fill = guide_legend(override.aes = list(colour = NULL))) +
+  scale_y_continuous(expand = c(0,0),breaks=c(1,2,3,4,5,6,7)) +
+  theme(plot.title = element_text(lineheight=2, face="bold"),
+        legend.title =  element_blank(),
+        legend.position = "top",
+        legend.key = element_rect(colour = "black"),
+        panel.background = element_rect(fill = "white"),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size = rel(2)),
+        axis.title.y = element_text(vjust = 1),
+        axis.text.x = element_text(colour="black", size= rel(2)),
+        axis.text.y = element_text(colour="black", size= rel(1.5)),
+        axis.line = element_line(size = 1, colour = "black",linetype = "solid"))
+```
+
+#### The similar plot from the original paper
+
+As a comparison, this is the corresponding graph in the original paper.
+
+```{r the original graph}
+img <- readJPEG("C:/Users/Jesse/Dropbox/Grad Work/254/Replication Project/Original Graph.JPG")
+grid.raster(img)
+```
+
+Visually, there appears to be no interaction in the plot of the replication data. Ratings of predicted liking exceeded ratings of actual liking by approximately the same amount in both conditions. Thus, I expect to find no significant interaction in the analysis of results. However, I would not be surprised to replicate the main effect obtained in the original study that profile writers in both conditions predict that they will be liked more than judges actually do like them. 
+
+
+To test the significance of these observations and their similarities with the original paper, the same statistical analyses conducted in the original paper (Confirmatory analyses) have been reported. Furthermore, to explore the scope of the effect more in depth besides confirmatory analyses, some exploratory analyses have been conducted which were not part of the original paper (Exploratory analyses).
+
+
+Hypothesis Testing
+=================================
+
+##I. Confirmatory analyses
+
+### Confirmatory analysis 1: interaction between profile writer condition and predicted vs. actual liking
+```{r echo=FALSE}
+negative_one=-1
+```
+
+For the original study, the authors conducted a regression analysis using condition (1 = maximize interest of others, `r negative_one` = control) and evaluation type (1 = predicted, `r negative_one` = actual) and their interaction as predictors. "To account for the fact that each profile was evaluated by several judges (but only one profile writer), [they] clustered robust errors by judges." This analysis examines whether the effect of trying to maximize others' interest affects predicted ratings of profile liking more than actual ratings.
+
+
+```{r Confirmatory analyses 1}
+#Creating clustered standard errors
+m1<-lm(Liking~Condition.Contrast*Evaluation.Contrast,data=d)#standard OLS regression
+rs1<-super.cluster.fun(m1, d$Participant)
+d <- read.csv("https://stanford.edu/~jor26/Final%20Data.csv",na.strings=c("","NA"))
+m2<-lm(Liking~Condition,d=d[d$Evaluation.Type=="Predicted",])
+m3<-lm(Liking~Condition,d=d[d$Evaluation.Type=="Actual",])
+#Obtaining coefficients and p-values from clustered errors
+```
+
+The critical result of the regression analysis in the original study was:
+
+> There was a significant interaction, b=0.162, robust SE = 0.067, t(257) = 2.42, p=.016, d=0.30. Whereas profile writers who tried to maximize interest in themselves believed that they would be liked more (M=5.28, SD=1.20) than did profile writers in the control condition (M=4.85, SD=1.36), b=0.434, robust SE =0.257, t(257) = 1.69, p=.093, d=.21, judges actually liked profile writers in the maximize-interest condition (M=4.31, SD=1.57) less than profile writers in the control condition (M=4.52, SD= 1.51), b=-.215, robust SE=0.073, t(257)=-2.94, p=.004, d=.37.
+
+Our replication of the same effect obtained the following results:
+
+There was an interaction, b = `r signif(rs1[[1]][, 1][4],3)`, robust SE = `r signif(rs1[[1]][, 2][4],3)`, t(`r rs1[[2]][, 1][1]+2 #this is because wald test gives residual df, which is 2 less than df - see wikipedia`) = `r signif(rs1[[1]][, 3][4],3)`, p=`r signif(rs1[[1]][, 4][4],3)`, d = `r signif((ms1.df[3][1,]-ms1.df[3][2,]-ms1.df[3][3,]+ms1.df[3][4,])/sqrt(mean(m1$residuals^2)),3)`. Profile writers who tried to maximize interest in themselves believed that they would liked `r less_more(ms1.df[3][3,],ms1.df[3][1,])` (M= `r signif(ms1.df[3][3,],3)`, SD = `r signif(ms1.df[4][3,],3)`) than did profile writers in the control condition (M= `r signif(ms1.df[3][1,],3)`, SD = `r signif(ms1.df[4][1,],3)`), b = `r signif(summary(m2)$coefficients[2],3)`, SE = `r signif(coef(summary(m2))[,2][2],3)`, t(`r summary(m2)$df[2]`) = `r signif(coef(summary(m2))[,3][2],3)`, p = `r signif(coef(summary(m2))[,4][2],3)`, d = `r signif(abs(summary(m2)$coefficients[2]/sqrt(mean(m2$residuals^2))),2)`. Judges liked profile writers in the maximize-interest condition (M = `r signif(ms1.df[3][4,],3)`, SD = `r signif(ms1.df[4][4,],3)`) `r less_more(ms1.df[3][4,],ms1.df[3][2,])` than profile writers in the control condition (M = `r signif(ms1.df[3][2,],3)`, SD = `r signif(ms1.df[4][2,],3)`), b = `r signif(rs1[[1]][, 1][2],3)`, robust SE = `r signif(rs1[[1]][, 2][2],3)`, t(`r rs1[[2]][, 1][1]+2`) = `r signif(rs1[[1]][, 3][2],3)`, p=`r signif(rs1[[1]][, 4][2],3)`, d = `r signif(abs((ms1.df[3][2,]-ms1.df[3][4,])/sqrt(mean(m3$residuals^2))),2)`.
+
+
+##II. Exploratory analyses
+
+In a first exploratory analysis, I will test the prediction generated from observation of the bar graph and the descriptive statistics, that profile writers across conditions will predict that they will be liked more than they actually are. 
+```{r}
+rs2<-lm(Liking~Evaluation.Type,data=d)
+summary(rs2)
+```
+In support of this prediction, I found that profile writers expected to be liked (M=5.11) more than judges actually liked them (M=4.403), t(1924)=-2.18, p=`r signif(coef(summary(rs2))[2,4],3)`. 
+
+In a second analysis, I investigate the role of the Modest Responding scale the original authors included in their procedure, but did not discuss in their results. 
+```{r}
+rs3<-lm(Liking~Evaluation.Type*Condition*MR.Composite,data=d)
+summary(rs3)
+```
+In a regression model predicting liking from instruction condition, predicted versus actual rating, modest responding score, and their interactions, no significant effects emerged, all ps>.25. 
+
+
+The analyses so far have looked at ratings of liking aggregated across all 18 profiles. In the following exploratory analysis, I explore how reliably the observed pattern of results holds across the different profiles. First, I create a graph showing the relationship between predicted and actual liking ratings for each of the 18 profiles, color coded by condition.
+```{r}
+levels(d$Evaluation.Type)<-c("P","A")
+
+ms2 <- d %>%
+  group_by(Condition, Evaluation.Type,Profile.Number) %>%
+  summarize(mean = mean(Liking),
+            sd=sd(Liking),
+            sem =sem(Liking), 
+            ci95=ci95(Liking))
+
+ggplot(ms2)+aes(x=Evaluation.Type,y=mean,fill=Condition)+geom_bar(position="dodge",stat="identity")+facet_grid(.~Profile.Number,space="free")
+```
+
+The direction of results appears relatively consistent across the different profiles. In only two profiles did the profile writer predict that they would be liked less than they actually were. However, the magnitude of profile writers' overestimated liking appears to vary moderately across profiles. To gain a deeper understanding of this variance, I now construct a mixed model of the interaction between condition (maximize interest vs. control) and evaluation type (predicted vs. actual) while including the different profiles as a random effect.
+```{r}
+rs4<-lm(Liking~Evaluation.Type*Condition,data=d)
+rs5<-lmer(Liking~Evaluation.Type*Condition+(1|Profile.Number),data=d)
+aic1<-AIC(logLik(rs4))
+aic2<-AIC(logLik(rs5))
+
+```
+Including a random intercept for the different profiles decreased the AIC by 134. While this accounts for some additional variance, it is only a modest improvement in the context of the large amount of unexplained variance left in the model. 
+
+
+#Discussion
+
+##I. Summary of Replication Attempt
+
+our replication of Experiment 3 of Scopelliti, Loewenstein, & Vosgerau (2015) failed to find a significant result for their main hypothesis that participants instructed to maximize others' interest in them would overestimate how much others like them more than participants simply instructed to create a factual profile. While participants in both conditions did overestimate how much people reading their profiles would like them, this effect was not amplified for participants instructed to maximize others' interest in them. Furthermore, none of these effects was significantly moderated by either the profile writer's or the judges' scores on a modest responding inventory, nor did including a random effect accounting for the mean differences in liking between profiles substantially improve the predictive model. 
+
+While the current attempt did not successfully replicate the original study, there are several important limitations which urge caution in drawing too damning conclusions from the present null results. This replication focused on only one of the four dependent variables assessed in the original study. While the variable chosen - predicted vs actually rated liking of the profiles - was significant in the original study, it is possible that some or all of the other dependent variables would have replicated more successfully in our study. Additionally, the replication was conducted on ratings of only 18 profiles, as compared to 100 different profiles in the original study. While our sample included enough ratings by judges to reach a high power level, the small number of profiles leaves open the possibility that the 18 profiles generated in our replication were simply not sufficient to observe the desired effect.
+
+In sum, I tentatively conclude from this project that the target finding has failed to replicate, though I caution against concluding too much from one study. No replication - failed or otherwise - should be taken as a verdict on the veracity of the original study, and only through convergent evidence from diverse attempts at studying people's calibration in predicting the successfulness of their efforts at self-promotion can we hope to obtain a reliable estimate of the phenomenon in question. 

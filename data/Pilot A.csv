@@ -1,0 +1,31 @@
+Participant,Age,Language,Ethnicity,Gender,Evaluation.Type,Condition,Text,Profile Number,Liking,MR1,MR2,MR3,MR4,MR5,MR6,MR7,MR8,MR9,MR10,MR11,MR12,MR13,MR14,MR15,MR16,MR17,MR18,MR19,MR20,MR.Composite
+1,22,English,White,Male,Predicted,Control,"Hi, I'm Bob, I climb Mt. Everest",1,7,1,2,3,4,5,6,7,1,2,3,4,5,6,7,1,2,3,4,5,6,4.1
+2,21,English,Hispanic,Male,Predicted,Control,My name is Joseph and I am a twenty one year old administration of justice student. My whole life I have valued morals and being a genuine person. I love football and basketball. Listen to hip/hop and pop music. Like to workout and go out and have fun with friends. At the moment I am currently unemployed. ,2,6,7,7,5,4,4,,4,6,1,4,4,7,1,7,1,5,7,7,1,7,5.7
+3,28,English,Hispanic,Male,Predicted,Maximize Interest,"I am an energetic, ambitious person.",3,7,7,7,3,1,4,1,5,7,5,5,3,7,1,2,6,4,1,4,7,4,4.25
+4,46,English,White,Female,Predicted,Maximize Interest,,4,6,7,2,6,6,3,3,2,6,3,7,6,4,1,3,5,2,6,6,5,2,4.3
+5,31,English,Asian,Female,Predicted,Maximize Interest,,5,5,2,2,4,7,7,2,6,3,1,7,6,5,4,3,3,6,1,2,4,2,4
+6,35,English,White,Female,Actual,Control,,1,4,6,3,3,1,3,6,1,1,4,6,3,4,6,7,7,3,4,5,1,6,4.15
+6,35,English,White,Female,Actual,Control,,2,2,1,4,7,6,4,6,4,5,2,6,7,4,2,7,5,3,7,2,1,4,4.8
+6,35,English,White,Female,Actual,Maximize Interest,,3,3,1,5,5,5,2,7,2,1,3,1,5,5,7,2,1,3,3,1,2,2,3.4
+6,35,English,White,Female,Actual,Maximize Interest,,4,6,4,7,2,5,2,3,3,4,7,1,5,4,7,7,6,4,4,6,4,3,3.55
+6,35,English,White,Female,Actual,Maximize Interest,,5,2,1,4,1,1,7,4,6,6,2,4,3,4,7,5,3,7,2,3,2,1,4.2
+7,56,English,Hispanic,Male,Actual,Control,,1,7,1,5,7,6,7,5,3,7,2,7,4,1,1,5,1,3,7,1,3,3,4.7
+7,56,English,Hispanic,Male,Actual,Control,,2,6,1,1,1,3,1,2,2,2,3,1,7,1,7,5,4,4,1,6,7,1,2.65
+7,56,English,Hispanic,Male,Actual,Maximize Interest,,3,7,4,3,5,1,2,4,2,2,3,2,4,5,5,3,4,1,2,6,7,7,3.65
+7,56,English,Hispanic,Male,Actual,Maximize Interest,,4,6,5,4,6,7,6,7,4,7,2,3,3,6,1,5,6,5,2,5,1,3,4.75
+7,56,English,Hispanic,Male,Actual,Maximize Interest,,5,3,2,5,5,4,4,6,4,2,7,1,6,2,1,4,6,7,5,7,6,3,4
+8,66,English,Asian,Male,Actual,Control,,1,1,5,6,7,5,7,1,2,6,7,1,5,1,4,2,3,3,7,2,4,2,3.75
+8,66,English,Asian,Male,Actual,Control,,2,2,5,5,3,6,7,5,6,3,4,3,3,4,5,2,4,1,1,5,3,2,3.7
+8,66,English,Asian,Male,Actual,Maximize Interest,,3,1,4,7,2,7,2,7,2,1,4,3,7,5,1,1,6,3,6,7,5,1,3.8
+8,66,English,Asian,Male,Actual,Maximize Interest,,4,5,5,5,3,2,6,5,6,6,7,1,2,1,4,6,6,2,4,6,5,2,3.85
+8,66,English,Asian,Male,Actual,Maximize Interest,,5,6,2,1,7,5,4,2,1,5,5,2,5,2,1,7,2,5,4,5,2,1,3.95
+9,40,English,White,Female,Actual,Control,,1,4,3,1,1,3,5,6,1,6,5,4,1,1,4,6,7,2,4,4,4,6,3.45
+9,40,English,White,Female,Actual,Control,,2,1,1,3,6,4,2,5,6,4,5,7,3,7,7,2,4,7,2,4,5,7,4.1
+9,40,English,White,Female,Actual,Maximize Interest,,3,7,1,1,4,1,7,7,4,7,7,1,6,4,1,1,5,6,6,3,4,7,4.4
+9,40,English,White,Female,Actual,Maximize Interest,,4,4,4,3,1,5,7,2,3,7,4,5,2,3,3,1,2,3,7,2,6,1,3.6
+9,40,English,White,Female,Actual,Maximize Interest,,5,5,3,6,2,6,2,1,2,4,4,3,1,6,3,5,3,6,3,2,6,3,3.4
+10,33,Spanish,Hispanic,Male,Actual,Control,,1,7,6,5,1,6,1,6,5,2,6,1,5,5,3,4,3,1,1,5,3,1,3.45
+10,33,Spanish,Hispanic,Male,Actual,Control,,2,4,6,3,2,3,3,4,4,5,5,3,4,2,7,1,3,6,7,6,2,1,3.9
+10,33,Spanish,Hispanic,Male,Actual,Maximize Interest,,3,3,6,6,4,4,6,3,7,6,1,7,1,1,7,3,1,6,2,7,7,1,4.35
+10,33,Spanish,Hispanic,Male,Actual,Maximize Interest,,4,6,4,2,2,2,4,5,2,2,1,2,3,5,3,6,1,3,5,1,5,4,3.95
+10,33,Spanish,Hispanic,Male,Actual,Maximize Interest,,5,5,7,4,5,6,3,1,1,4,7,3,6,4,5,3,5,2,2,4,3,2,3.3

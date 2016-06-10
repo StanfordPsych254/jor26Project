@@ -1,0 +1,813 @@
+<!-- ## Introduction -->
+<!-- This example experiment is a categorization task. On every trial, the subject sees a number and has to press a key depending on whether the number is even or odd. There are two between-subjects independent variables: which keys get pressed (either P for even and Q for odd or vice versa) and the trial order (subjects see one of two fixed orders). There are two dependent variables: accuracy and reaction time. -->
+
+<!-- This example assumes that you already know the basics of HTML, JavaScript (JS), and CSS. If not, [the Codecademy tutorials](http://www.codecademy.com/tracks/javascript) are a useful starting point. -->
+
+<!-- This page contains source code on the right and explanations/commentary on the left. You can jump around the different files by using the "Jump To ..." menu in the upper right corner. You will also want to refer to <a href="../even-odd.html">the actual experiment</a>. -->
+
+<!-- ## Code -->
+<html>
+<head>
+	<title>SP-Replication</title>
+	<!-- Include the [jQuery library](http://jquery.com/), which helps you manipulate HTML elements from JS. -->
+	<script src="jquery-1.11.2.min.js"></script>
+	
+	<!-- Include my library, [mmturkey][mmturkey], which manages submitting data to Mechanical Turk. This defines a global object, <code>turk</code>, and attaches five properties to it, <code>hitId</code>, <code>assignmentId</code>, <code>workerId</code>, <code>previewMode</code>, and <code>turkSubmitTo</code>. It also provides a single method, <code>submit(data)</code>, which you use to submit data to Turk. If no submission URL has been provided (because, e.g. you're testing your code outside of the Turk environment), <code>submit</code> displays what would have been submitted (without, obviously, any Turk-specific variables like <code>workerId</code> and <code>assignmentId</code>).  -->
+	<!-- [mmturkey]: http://github.com/longouyang/mmturkey -->
+	<script src="mmturkey-0.6.js"></script>
+	
+	<!-- Include the cascading style sheet (CSS), which lets us separate style from content. This stylesheet is important because it defines the notion of a **slide** and also makes things look nicer, which subjects appreciate. It's worth looking at the [source code](style.html). -->
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- The instructions slide. -->
+<div class="slide" id="instructions">
+  <div style="width: 500px; margin: 0 auto; text-align: center; background-color: #8C1516; padding: 20px 15px 10px 10px">
+    <img src="images/stanford.png" height="46" width="360" alt="Stanford University">
+  </div>
+	<p class="block-text">In this experiment, you will be asked to respond to a series of questions about your life.
+		<!-- Tell the subject which keys to press. We need to set these values dynamically; I use <code>{{}}</code> to indicate template locations in HTML that will be modified by JavaScript. -->
+		Click the button below when you are ready to begin the experiment.	
+	</p>
+	<!-- Button to start the experiment. <code>this.blur()</code> removes the focus from the button, if the user pressed the button by using the keyboard, rather than the mouse. -->
+	<!-- Original: <button type="button" onclick="this.blur(); experiment.next()">Start</button> -->
+	<button type="button" onclick="this.blur(); randomAssignment()">Start</button>
+	<!-- Legal blurb that we're required to show. -->
+	<p class="block-text" id="legal">Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact us at stanfordpsych254@gmail.com. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you. We have recently been made aware that your public Amazon.com profile can be accessed via your worker ID if you do not choose to opt out. If you would like to opt out of this feature, you may follow instructions available <a href="http://www.amazon.com/gp/help/customer/display.html?nodeId=16465241">here</a>.</p>
+</div>
+<!-- The "stage" slide - where the bulk of the experiment will be displayed. Again, note the use of <code>{{}}</code>. -->
+<div class="slide" id="stage">
+	<p id="number">{{}}</p>
+</div>
+	
+<div class="slide" id="demographics">
+	<p>Finally, we have a few demographic questions for you.</p>
+	<form onSubmit="submitDemographics();" id="demographicsForm" >
+How old are you?: <input type="text" name="Age" value=""><br>
+What is your native/first language?: <input type="text" name="Language" value=""><br>
+What is your ethnicity?: <select name="Ethnicity">
+    <option value="white">White</option>
+    <option value="hispanic">Hispanic or Latino</option>
+    <option value="asian">Asian/Pacific Islander</option>
+    <option value="black">Black or African American</option>
+	<option value="native">Native American</option>
+    <option value="other">Other</option>
+	</select>
+	<br><br>
+What is your gender?: <select name="Gender">
+	<option value="male">Male</option>
+    <option value="female">Female</option>
+	<option value="other">Other/Prefer not to say</option>
+	</select>
+	<br><br>
+ <!--<input type="submit" value="Next Page">-->
+	<button type="button" onclick="submitDemographics();">Next Page</button>
+  </form>
+</div>
+
+<div class="slide" id="maximize" style="text-align:center">
+	<p style="margin:auto; max-width:900px">Thank you for your participation. In this study we would like you to present yourself by creating a personal profile that describes five things about you. Your profile will be evaluated by other people, and your goal is to write the five things that will make the other people most interested in meeting you. For example, you can write about your education, sports or hobbies, your look or personality, your family, your social life.</p>
+	<br>
+	<p style="margin:auto; max-width:900px">Please write in the box below five facts about yourself that will make other people most interested in meeting you to create your personal profile.</p>
+	<form onSubmit="submitMaximize()" id="maximizeForm">
+	<br>
+	<textarea onfocus="this.value = ''" rows="20" cols="80" name="comment" form="maximizeForm" id="maximizeText" name="maximizeText" required="required">
+Enter text here...</textarea>
+	<br>	
+	<!-- <button type="button" onclick="submitMaximize();">Next Page</button> -->
+	</form>
+	<table align="center"><tr>
+      <td align="center">
+        <button type="button" id="nextButton_Att" onClick="submitMaximize()"> Next Page</button>
+      </td> 
+      <tr><td align="center">
+        <div id="maximizeMessage_att"> </div>
+      </td></tr>
+    </table>
+</div>
+<div class="slide" id="control" style="text-align:center">
+	<p style="margin:auto; max-width:900px">Thank you for your participation. In this study we would like you to present yourself by creating a personal profile that describes five things about you. For example, you can write about your education, sports or hobbies, your look or personality, your family, your social life.</p>
+	<br>
+	<p style="margin:auto; max-width:900px">Please write in the box below five facts about you to create your personal profile.</p>
+	<form onSubmit="submitControl()" id="controlForm">
+	<br>
+	<textarea onfocus="this.value = ''" rows="20" cols="80" name="comment" form="controlForm" id="controlText" name="controlText" required="required">
+Enter text here...</textarea>
+	<br>	
+	<!-- <button type="button" onclick="submitControl();">Next Page</button> -->
+	</form>
+	<table align="center"><tr>
+      <td align="center">
+        <button type="button" id="nextButton_Att" onClick="submitControl()"> Next Page</button>
+      </td> 
+      <tr><td align="center">
+        <div id="controlMessage_att"> </div>
+      </td></tr>
+    </table>
+</div>
+<div class="slide" id="rating">
+<form onSubmit="submitRating()" id="ratingForm">
+    <label class="statement">To what extent do you think a person viewing your profile would like you?</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="liking" value="1">
+        <label>Not at all</label>
+      </li>
+      <li>
+        <input type="radio" name="liking" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="liking" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="liking" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="liking" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="liking" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="liking" value="7">
+        <label>Very much</label>
+      </li>
+    </ul>
+	<!--<button type="button" onclick="submitRating();">Next Page</button> -->
+    </form>
+	<br>
+	<p style="text-align:center">In the box below, please restate in your own words the instructions we gave you on the previous page about creating your profile.</p>
+	<textarea onfocus="this.value = ''" rows="20" cols="80" form="controlForm" id="attention" name="attention" style="display:block; margin:auto"></textarea>
+	<table align="center"><tr>
+      <td align="center">
+        <button type="button" id="nextButton_Att" onClick="submitRating()"> Next Page</button>
+      </td> 
+      <tr><td align="center">
+        <div id="testMessage_att"> </div>
+      </td></tr>
+    </table>
+</div>
+<div class="slide" id="modesty_scale">
+  <h1 class="likert-header">Please rate your agreement with each of the following statements.</h1>
+  <form onsubmit="submitModesty()" id="modestyForm">
+    <label class="statement">1. It's difficult for me to talk about my strengths to others even when I know I possess them.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR1" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR1" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR1" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR1" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR1" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR1" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR1" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">2. I think it's rude for a person to brag about him/herself</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR2" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR2" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR2" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR2" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR2" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR2" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR2" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">3. I dislike speaking about myself in positive terms in the presence of others.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR3" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR3" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR3" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR3" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR3" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR3" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR3" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+   <label class="statement">4. If I have done something well, I like to tell others about it.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR4" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR4" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR4" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR4" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR4" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR4" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR4" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">5. I get upset at the thought of having to describe my positive traits to others.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR5" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR5" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR5" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR5" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR5" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR5" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR5" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">6. Even if you've "got it", you certainly should not "flaunt it".</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR6" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR6" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR6" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR6" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR6" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR6" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR6" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">7. I feel uncomfortable whenever I have to describe my successes to others.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR7" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR7" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR7" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR7" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR7" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR7" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR7" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">8. It is a real social mistake to show off in public.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR8" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR8" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR8" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR8" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR8" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR8" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR8" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">9. Whenever I accomplish something important, I get excited telling others about it.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR9" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR9" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR9" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR9" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR9" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR9" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR9" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">10. Bragging on oneself in a group is always socially inappropriate.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR10" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR10" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR10" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR10" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR10" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR10" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR10" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">11. I prefer to keep my accomplishments to myself rather than talk about them.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR11" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR11" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR11" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR11" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR11" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR11" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR11" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">12. I have a hard time describing myself to others in positive terms even when I know I've done well.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR12" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR12" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR12" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR12" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR12" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR12" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR12" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">13. If I've played a big role in bringing about some kind of success, I don't feel reluctant telling people about it.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR13" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR13" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR13" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR13" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR13" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR13" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR13" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">14. I've always felt that bragging on oneself in the presence of others is one of the best ways to become disliked.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR14" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR14" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR14" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR14" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR14" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR14" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR14" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">15. My friends will tell you that, when I accomplish something, I'm not shy about tooting my horn.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR15" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR15" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR15" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR15" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR15" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR15" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR15" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">16. When someone asks me to describe a recent success, I tend to downplay what I've accomplished.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR16" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR16" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR16" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR16" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR16" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR16" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR16" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">17. It's unpleasant for me to talk about my successes in public.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR17" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR17" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR17" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR17" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR17" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR17" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR17" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">18. I believe it's impolite to talk excessively about one's achievements, even if they are outstanding.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR18" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR18" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR18" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR18" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR18" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR18" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR18" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">19. When people tell me about one of their successes, I like to tell them about one of mine.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR19" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR19" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR19" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR19" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR19" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR19" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR19" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <label class="statement">20. In describing my positive qualities to others, I feel awkward.</label>
+    <ul class='likert'>
+      <li>
+        <input type="radio" name="MR20" value="1">
+        <label>Completely disagree</label>
+      </li>
+      <li>
+        <input type="radio" name="MR20" value="2">
+        <label>2</label>
+      </li>
+      <li>
+        <input type="radio" name="MR20" value="3">
+        <label>3</label>
+      </li>
+      <li>
+        <input type="radio" name="MR20" value="4">
+        <label>4</label>
+      </li>
+      <li>
+        <input type="radio" name="MR20" value="5">
+        <label>5</label>
+      </li>
+      <li>
+        <input type="radio" name="MR20" value="6">
+        <label>6</label>
+      </li>
+      <li>
+        <input type="radio" name="MR20" value="7">
+        <label>Completely agree</label>
+      </li>
+    </ul>
+	<br>
+    <button type="button" onclick="submitModesty();">Next Page</button>
+  </form>
+</div>
+<!-- The finish slide. -->
+<div class="slide" id="finished">
+	You're finished - thanks for participating! Submitting to Mechanical Turk...
+</div>
+
+<!-- Include the <a href="experiment.html">JavaScript file for the experiment</a>. As written, that script immediately executes commands, so we include it here at the end of the HTML file to ensure that resources referenced by the script actually exist. For instance, one of the immediately executed commands is <code>showSlide("instructions")</code>. If we loaded experiment.js, say, in the <code>head</code> section, <code>showSlide("instructions")</code> would fail because the <code>instructions</code> slide doesn't exist yet. It is possible to load the script in <code>head</code> but you have to ensure that any immediately executed commands, if they rely on potentially uninitialized HTML elements, are _delayed_ until the page is ready, using either [window.onload][onload] or jQuery's more robust [$(document).ready()][domReady]  -->
+<!-- [onload]: https://developer.mozilla.org/en/DOM/window.onload -->
+<!-- [domReady]: http://api.jquery.com/ready/ -->
+<script src="profile-writing.js"></script>
+
+</body>
+</html>
